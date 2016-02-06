@@ -79,8 +79,20 @@ def create_chill(request):
 @csrf_exempt
 def toggle_chill(request):
     email = request.POST['email']
-    user = User.objects.get(email = email)
-    user.switch_chilled()
+    type = request.POST['type']
+    is_chilled = request.POST['isChill']
+    data = {}
+    try:
+        user = User.objects.get(email = email)
+        user.Type = type
+        user.is_chilled = is_chilled
+        user.save()
+        data['status'] = "Succeed"
+    except ObjectDoesNotExist:
+        data['status'] = "No such user"
+
+    return JsonResponse(data)
+
 
 @csrf_exempt
 def send_message(request):
@@ -107,8 +119,8 @@ def receive_message(request):
     group = request.POST['group']
     data = {}
     try:
-        group = Group.objects.get(email=group)
-        data['messages'] = group.messages.all().order_by()
+        group = Group.objects.get(chiller=group)
+        data['messages'] = group.messages.all().order_by('time')
         data['status'] = 'Succeed'
 
     except ObjectDoesNotExist:
