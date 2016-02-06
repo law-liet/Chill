@@ -117,7 +117,7 @@ def send_message(request):
 
 @csrf_exempt
 def receive_message(request):
-    group = request.POST['group']
+    group = request.POST.get('group', "chill")
     data = {}
     try:
         group = Group.objects.get(name=group)
