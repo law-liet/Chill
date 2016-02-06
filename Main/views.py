@@ -3,6 +3,7 @@ from Main.models import User, Group, Message
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 import requests
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def register(request):
     email = request.POST['email']
@@ -33,6 +34,7 @@ def register(request):
         data['status'] = "Succeed"
         return JsonResponse(data)
 
+@csrf_exempt
 def get_all_chilled(request):
     email = request.POST['email']
     data = {}
@@ -47,6 +49,7 @@ def get_all_chilled(request):
 
     return JsonResponse(data)
 
+@csrf_exempt
 def join_chilled(request):
     user = request.POST['email']
     ##chiller = request.POST['chiller']
@@ -69,14 +72,17 @@ def join_chilled(request):
 
     return JsonResponse(data)
 
+@csrf_exempt
 def create_chill(request):
     pass
 
+@csrf_exempt
 def toggle_chill(request):
     email = request.POST['email']
     user = User.objects.get(email = email)
     user.switch_chilled()
 
+@csrf_exempt
 def send_message(request):
     sender = request.POST['sender']
     group = request.POST['group']
@@ -96,7 +102,7 @@ def send_message(request):
 
     return JsonResponse(data)
 
-
+@csrf_exempt
 def receive_message(request):
     group = request.POST['group']
     data = {}
