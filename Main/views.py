@@ -119,7 +119,7 @@ def receive_message(request):
     group = request.POST['group']
     data = {}
     try:
-        group = Group.objects.get(chiller=group)
+        group = Group.objects.get(name=group)
         data['messages'] = group.messages.all().order_by('time')
         data['status'] = 'Succeed'
 
