@@ -8,7 +8,7 @@ class User(models.Model):
     fb_id = models.CharField(max_length = 64)
     email = models.CharField(max_length=64)
     is_chilled = models.BooleanField(default=False)
-    Type = models.CharField(default="Chilled")
+    Type = models.CharField(default="Chilled", max_length=128)
     friends = models.ManyToManyField("self")
 
     def switch_chilled(self):
