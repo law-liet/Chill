@@ -5,18 +5,18 @@ Basic info: backend of Chill for Tartanhack 2016
 ### Models:
 
 - User
-        - name
-        - is_chilled
-        - friends
-        - joined_event
+  - name
+  - is_chilled
+  - friends
+  - joined_event
 
 - Event
-        - name
-        - description
-        - members
-        - start_time
-        - end_time
-        - size
+  - name
+  - description
+  - members
+  - start_time
+  - end_time
+  - size
 
 ### API:
 

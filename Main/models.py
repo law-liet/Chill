@@ -5,8 +5,7 @@ class User(models.Model):
     name = models.CharField(max_length=64)
     is_chilled = models.BooleanField(default=False)
     friends = models.ManyToManyField("self")
-    events = models.ManyToManyField(Event)
-    joined_event = models.ForeignKey(Event)
+    joined_event = models.BooleanField(default=False)
 
 class Event(models.Model):
     chiller = models.ForeignKey(User, related_name="chiller")
