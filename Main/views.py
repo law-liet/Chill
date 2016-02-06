@@ -6,11 +6,6 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
-def options(self, request, id):
-    response = HttpResponse()
-    response['allow'] = ','.join([self.allowed_methods])
-    return response
-
 def register(request):
     email = request.POST['email']
     first_name = request.POST['firstName']
