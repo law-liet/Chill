@@ -5,7 +5,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     fb_token = models.CharField(max_length=128)
-    fb_id = model.CharField(max_length = 64)
+    fb_id = models.CharField(max_length = 64)
     email = models.CharField(max_length=64)
     is_chilled = models.BooleanField(default=False)
     friends = models.ManyToManyField("self")
