@@ -19,5 +19,10 @@ from Main import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^register', views.register)
+    url(r'^register', views.register),
+    url(r'^send', views.send_message),
+    url(r'^receive', views.receive_message),
+    url(r'^join', views.join_chilled),
+    url(r'^chill', views.toggle_chill),
+    url(r'^getAllChill', views.get_all_chilled)
 ]

@@ -49,12 +49,12 @@ def get_all_chilled(request):
 
 def join_chilled(request):
     user = request.POST['email']
-    chiller = request.POST['chiller']
+    ##chiller = request.POST['chiller']
     data = {}
     try:
         user = User.objects.get(email=user)
-        chiller = User.objects.get(email=chiller)
-        group = Group.objects.get(chiller = chiller)
+        ##chiller = User.objects.get(email=chiller)
+        group = Group.objects.get(chiller = "chill")
         if group.size < group.max_size:
             group.members.add(user)
             group.size += 1
@@ -85,7 +85,7 @@ def send_message(request):
     try:
         user = User.objects.get(email = sender)
         group = Group.objects.get(chiller = group)
-        new_msg = Message.objects.create(sender=user,content=content)
+        new_msg = Message.objects.create(sender=user, name=user.first_name, content=content)
         new_msg.save()
         group.messages.add(new_msg)
         group.save()
@@ -102,7 +102,7 @@ def receive_message(request):
     data = {}
     try:
         group = Group.objects.get(email=group)
-        data['messages'] = group.messages
+        data['messages'] = group.messages.all().order_by()
         data['status'] = 'Succeed'
 
     except ObjectDoesNotExist:

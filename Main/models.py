@@ -8,6 +8,7 @@ class User(models.Model):
     fb_id = models.CharField(max_length = 64)
     email = models.CharField(max_length=64)
     is_chilled = models.BooleanField(default=False)
+    Type = models.CharField(default="Chilled")
     friends = models.ManyToManyField("self")
 
     def switch_chilled(self):
@@ -16,18 +17,18 @@ class User(models.Model):
 
 class Message(models.Model):
     sender = models.ForeignKey(User)
+    name = models.CharField(max_length=64)
     content = models.CharField(max_length=8192)
     time = models.DateTimeField()
 
 class Group(models.Model):
     chiller = models.ForeignKey(User, related_name="chiller")
     members = models.ManyToManyField(User, related_name="members")
-    name = models.CharField(max_length=64)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    max_size = models.IntegerField(default=2)
-    size = models.IntegerField(default=1)
-    description = models.CharField(max_length=8192)
+    #start_time = models.DateTimeField()
+    #end_time = models.DateTimeField()
+    #max_size = models.IntegerField(default=2)
+    #size = models.IntegerField(default=1)
+    Type = models.CharField(max_length=8192)
     messages = models.ManyToManyField(Message, related_name="messages")
 
 
