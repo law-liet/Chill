@@ -2,20 +2,30 @@ from django.shortcuts import render
 from Main.models import User, Group, Message
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
-
+import requests
 # Create your views here.
 def register(request):
     email = request.POST['email']
-    first_name = request.POST['first']
-    last_name = request.POST['last']
-    fb_token = request.POST['fb']
+    first_name = request.POST['firstName']
+    last_name = request.POST['lastName']
+    fb_token = request.POST['facebookAccessToken']
+    params = {'access_token': fb_token} 
+    r = requests.get('https://graph.facebook.com/me/', params= params)
+    fb_id = r['id']
+
     data = {}
     try:
         User.objects.get(email = email)
         data['status'] = "Email Already Exist"
         return JsonResponse(data)
     except ObjectDoesNotExist:
-        user = User.objects.create(first_name = first_name, last_name = last_name, fb_token= fb_token, email=email)
+        user = User.objects.create(first_name = first_name, last_name = last_name, fb_id = fb_id, fb_token= fb_token, email=email)
+     
+        r = requests.get("https://graph.facebook.com/me/friends", params=params)
+        result = r.json()
+        for friend in result['data']: 
+            f = User.objects.get(fb_id = friend['id'])
+            user.friends.add(f)
         user.save()
         data['status'] = "Succeed"
         return JsonResponse(data)
