@@ -24,8 +24,11 @@ def register(request):
         r = requests.get("https://graph.facebook.com/me/friends", params=params)
         result = r.json()
         for friend in result['data']: 
-            f = User.objects.get(fb_id = friend['id'])
-            user.friends.add(f)
+            try:
+                f = User.objects.get(fb_id = friend['id'])
+                user.friends.add(f)
+            except ObjectDoesNotExist:
+                pass 
         user.save()
         data['status'] = "Succeed"
         return JsonResponse(data)
