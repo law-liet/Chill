@@ -1,10 +1,16 @@
 from django.shortcuts import render
 from Main.models import User, Group, Message
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 import requests
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
+
+def options(self, request, id):
+    response = HttpResponse()
+    response['allow'] = ','.join([self.allowed_methods])
+    return response
+
 def register(request):
     email = request.POST['email']
     first_name = request.POST['firstName']
